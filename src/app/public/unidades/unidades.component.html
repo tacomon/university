@@ -1,0 +1,70 @@
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Unidades</h1>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="card shadow">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h4 class="m-0 font-weight-bold text-primary">Filtros Unidades</h4>
+        </div>
+        <div class="card-body row" [formGroup]="formFiltrosUnidades">
+          <div class="app-form-field col-md-4 col-xl-4 col-lg-4 mb-1">
+            <mat-form-field appearance="outline">
+              <mat-label for="frmCtrlperiod">Asignatura</mat-label>
+              <mat-select id="frmCtrlperiod" placeholder="Seleccione..." formControlName="idAsignatura">
+                <mat-option value="Seleccione..." >Todas</mat-option>
+                <mat-option *ngFor="let asignatura of listAsignatura" [value]="asignatura.idAsignatura"> {{ asignatura.nombre }} </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <hr>
+        <div class="container">
+          <button class="btn btn-success float-right" (click)="openModalAgregar()">Agregar</button>
+        </div>
+        <hr>
+        <div class="container row">
+          <div class="table table-responsive align-center">
+            <table mat-table [dataSource]="dataUnidades">
+              <caption>Actividades</caption>
+              <ng-container matColumnDef="idUnidad" hidden>
+                <th mat-header-cell *matHeaderCellDef class="m-3 p-3"> # </th>
+                <td mat-cell *matCellDef="let element" class="m-3 p-3"> {{element.idUnidad}} </td>
+              </ng-container>
+              <ng-container matColumnDef="descripcion" hidden>
+                <th mat-header-cell *matHeaderCellDef class="m-3 p-3"> Título </th>
+                <td mat-cell *matCellDef="let element" class="m-3 p-3"> {{element.descripcion}} </td>
+              </ng-container>
+              <ng-container matColumnDef="asignatura" hidden>
+                <th mat-header-cell *matHeaderCellDef class="m-3 p-3"> Asignatura </th>
+                <td mat-cell *matCellDef="let element" class="m-3 p-3"> {{element.asignatura}} </td>
+              </ng-container>
+              <ng-container matColumnDef="fechaInicio" hidden>
+                <th mat-header-cell *matHeaderCellDef class="m-3 p-3"> Fecha Inicio </th>
+                <td mat-cell *matCellDef="let element" class="m-3 p-3"> {{element.fechaInicio}} </td>
+              </ng-container>
+              <ng-container matColumnDef="fechaFin" hidden>
+                <th mat-header-cell *matHeaderCellDef class="m-3 p-3"> Fecha Fin </th>
+                <td mat-cell *matCellDef="let element" class="m-3 p-3"> {{element.fechaFin}} </td>
+              </ng-container>
+
+              <!-- <ng-container matColumnDef="options" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <button class="btn btn-success m-2 btn-sm" (click)="openModalModificacion(element)">Modificar</button>
+                </td>
+              </ng-container> -->
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns" class="m-2"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="m-2"></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

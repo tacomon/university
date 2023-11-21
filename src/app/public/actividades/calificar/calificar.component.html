@@ -1,0 +1,69 @@
+<h1 mat-dialog-title>{{titulo}}</h1>
+<div mat-dialog-content class="m-2">
+  <div class="container" [formGroup]="formCalificar">
+    <div class="row">
+      <div class="app-form-field col-md-4 col-xl-4 col-lg-4 mb-1">
+        <mat-form-field appearance="outline">
+          <mat-label for="frmCtrlperiod">Asignatura</mat-label>
+          <mat-select id="frmCtrlperiod" placeholder="Seleccione..." formControlName="idAsignatura" [disabled]="true">
+            <mat-option value="Seleccione..." >Todas</mat-option>
+            <mat-option *ngFor="let asignatura of listAsignatura" [value]="asignatura.idAsignatura"> {{ asignatura.nombre }} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="app-form-field col-md-4 col-xl-4 col-lg-4 mb-1">
+        <mat-form-field appearance="outline">
+          <mat-label for="frmCtrlperiod">Unidad</mat-label>
+          <mat-select id="frmCtrlperiod" placeholder="Seleccione..." formControlName="idUnidad" [disabled]="true">
+            <mat-option value="Seleccione..." >Todas</mat-option>
+            <mat-option *ngFor="let unidad of listUnidad" [value]="unidad.idUnidad"> {{ unidad.descripcion }} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="app-form-field col-md-4 col-xl-4 col-lg-4 mb-1">
+        <mat-form-field appearance="outline">
+          <mat-label for="frmCtrlperiod">Tema</mat-label>
+          <mat-select id="frmCtrlperiod" placeholder="Seleccione..." formControlName="idTema" [disabled]="true">
+            <mat-option value="Seleccione..." >Todas</mat-option>
+            <mat-option *ngFor="let tema of listTema" [value]="tema.idTema"> {{ tema.descripcion }} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="app-form-field col-md-4 col-xl-4 col-lg-4 mb-1">
+        <mat-form-field appearance="outline" class="mat-form-field-disabled">
+          <mat-label for="frmCtrlperiod">Titulo</mat-label>
+          <input matInput type="text" formControlName="titulo" placeholder="Título" readonly style="color: rgba(0,0,0,.38)">
+        </mat-form-field>
+      </div>
+      <div class="app-form-field col-md-4 col-xl-4 col-lg-4 mb-1">
+        <mat-form-field appearance="outline" class="mat-form-field-disabled">
+          <mat-label for="frmCtrlperiod">Alumno</mat-label>
+          <input matInput type="text" formControlName="alumno" placeholder="Alumno" readonly style="color: rgba(0,0,0,.38)">
+        </mat-form-field>
+      </div>
+      <!-- <div class="app-form-field col-md-4 col-xl-4 col-lg-4 mb-1">
+        <mat-form-field appearance="outline">
+          <mat-label for="frmCtrlperiod">Entregable</mat-label>
+          <input matInput type="file" formControlName="entregable" placeholder="Entregable">
+        </mat-form-field>
+      </div> -->
+      <div class="app-form-field col-md-4 col-xl-4 col-lg-4 mb-1">
+        <mat-form-field appearance="outline">
+          <mat-label for="frmCtrlperiod">Calificación</mat-label>
+          <input matInput type="number" formControlName="calificacion" placeholder="Calificación">
+        </mat-form-field>
+      </div>
+      <div class="app-form-field col-md-4 col-xl-4 col-lg-4 mb-1">
+        <mat-form-field appearance="outline">
+          <mat-label for="frmCtrlperiod">Retroalimentación</mat-label>
+          <textarea matInput type="text" formControlName="retroAlimentacion" placeholder="Retroalimentación">
+            </textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions class="float-right">
+  <button mat-button mat-dialog-close class="btn btn-danger mr-2">Cancelar</button>
+  <button mat-button mat-dialog-close cdkFocusInitial class="btn btn-success" (click)="calificar()">Guardar</button>
+</div>

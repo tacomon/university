@@ -1,0 +1,36 @@
+<div id="wrapper">
+
+  <app-side-bar></app-side-bar>
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+          <!-- <header></header> -->
+          <app-top-bar></app-top-bar>
+
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <router-outlet></router-outlet>
+          </div>
+          <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+              <div class="copyright text-center my-auto">
+                  <span> &copy; </span>
+              </div>
+          </div>
+      </footer>
+      <!-- End of Footer -->
+
+  </div>
+  <!-- End of Content Wrapper -->
+
+</div>

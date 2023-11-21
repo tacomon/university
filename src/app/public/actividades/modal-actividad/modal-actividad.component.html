@@ -1,0 +1,75 @@
+<h1 mat-dialog-title>{{titulo}}</h1>
+<div mat-dialog-content class="m-2">
+  <div class="container" [formGroup]="formActividad">
+    <div class="row">
+      <div class="app-form-field col-md-4 col-xl-4 col-lg-4 mb-1">
+        <mat-form-field appearance="outline">
+          <mat-label for="frmCtrlperiod">Asignatura</mat-label>
+          <mat-select id="frmCtrlperiod" placeholder="Seleccione..." formControlName="idAsignatura">
+            <mat-option value="Seleccione..." >Todas</mat-option>
+            <mat-option *ngFor="let asignatura of listAsignatura" [value]="asignatura.idAsignatura"> {{ asignatura.nombre }} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="app-form-field col-md-4 col-xl-4 col-lg-4 mb-1">
+        <mat-form-field appearance="outline">
+          <mat-label for="frmCtrlperiod">Unidad</mat-label>
+          <mat-select id="frmCtrlperiod" placeholder="Seleccione..." formControlName="idUnidad">
+            <mat-option value="Seleccione..." >Todas</mat-option>
+            <mat-option *ngFor="let asignatura of listUnidad" [value]="asignatura.idUnidad"> {{ asignatura.descripcion }} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="app-form-field col-md-4 col-xl-4 col-lg-4 mb-1">
+        <mat-form-field appearance="outline">
+          <mat-label for="frmCtrlperiod">Tema</mat-label>
+          <mat-select id="frmCtrlperiod" placeholder="Seleccione..." formControlName="idTema">
+            <mat-option value="Seleccione..." >Todos</mat-option>
+            <mat-option *ngFor="let asignatura of listTema" [value]="asignatura.idTema"> {{ asignatura.descripcion }} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="app-form-field col-md-4 col-xl-4 col-lg-4 mb-1">
+        <mat-form-field appearance="outline">
+          <mat-label for="frmCtrlperiod">Título</mat-label>
+          <input matInput type="text" formControlName="titulo" placeholder="titulo">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="app-form-field col-md-4 col-xl-4 col-lg-4 mb-1">
+        <mat-form-field appearance="outline">
+          <mat-label for="frmCtrlperiod">Fecha de Inicio</mat-label>
+          <input matInput type="text" formControlName="fechaInicio" [matDatepicker]="pickerFI" placeholder="Fecha de Inicio">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="pickerFI"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFI></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="app-form-field col-md-4 col-xl-4 col-lg-4 mb-1">
+        <mat-form-field appearance="outline">
+          <mat-label for="frmCtrlperiod">Fecha Entrega</mat-label>
+          <input matInput type="text" formControlName="fechaEntrega" [matDatepicker]="pickerFF" placeholder="Fecha Termino">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="pickerFF"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFF></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <h6>Anexos</h6>
+    </div>
+    <div class="row">
+      <div class="app-form-field col-md-12 col-xl-12 col-lg-12 mb-1">
+        <div class="input-group mb-3">
+        <input type="file" class="form-control" id="inputFileAnexo" [formControl]="ctrlArchivo">
+        <label class="input-group-text" for="inputFileAnexo">Cargar Archivo</label>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions class="float-right">
+  <button mat-button mat-dialog-close class="btn btn-danger mr-2">Cancelar</button>
+  <button mat-button mat-dialog-close cdkFocusInitial class="btn btn-success" [mat-dialog-close]="formValue()">Guardar</button>
+</div>
