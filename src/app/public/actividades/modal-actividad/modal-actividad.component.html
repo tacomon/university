@@ -63,8 +63,15 @@
     <div class="row">
       <div class="app-form-field col-md-12 col-xl-12 col-lg-12 mb-1">
         <div class="input-group mb-3">
-        <input type="file" class="form-control" id="inputFileAnexo" [formControl]="ctrlArchivo">
+        <input type="file" class="form-control" id="inputFileAnexo" [formControl]="ctrlArchivo" accept=".pdf">
         <label class="input-group-text" for="inputFileAnexo">Cargar Archivo</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="app-form-field col-md-12 col-xl-12 col-lg-12 mb-1" *ngFor="let anexo of formActividad.value.anexos; let i = index">
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputFileAnexo{{i}}" disabled> Anexo {{i+1}}</label>
+          <input type="text" class="form-control" id="inputFileAnexo{{i}}" [value]="anexo.nombre" disabled readonly>
       </div>
     </div>
   </div>

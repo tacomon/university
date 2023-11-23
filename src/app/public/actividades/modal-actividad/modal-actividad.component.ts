@@ -30,6 +30,7 @@ export class ModalActividadComponent implements OnInit {
       titulo: [null, [Number]],
       fechaInicio: [null, [Number]],
       fechaEntrega: [null, [Number]],
+      anexos: [[], []]
     });
     this.formActividad.get('idAsignatura')?.valueChanges.subscribe({
       next: (id) => {
@@ -45,16 +46,19 @@ export class ModalActividadComponent implements OnInit {
     });
     this.ctrlArchivo.valueChanges.subscribe({
       next: (value) => {
-        console.info(value);
-        this.agregarAnexo(value);
+        if(value) {
+          console.info(value);
+          this.agregarAnexo(value);
+        }
       },
     });
   }
 
   async agregarAnexo(file: any) {
-    const archivoBase64 = await this.toBase64(file);
+    const {archivoBase64, filename} = await this.toBase64(file);
     console.info(archivoBase64);
-    // TODO: Agregar funcionalidad crear componente con el documento anexo cargado
+    this.formActividad.get('anexos')?.value.push({nombre: filename, file: archivoBase64});
+
   }
 
   toBase64(file: any): Promise<any> {
@@ -62,7 +66,7 @@ export class ModalActividadComponent implements OnInit {
       const reader = new FileReader();
       const input: any = document.querySelector('#inputFileAnexo');
       reader.readAsDataURL(input.files[0]);
-      reader.onload = () => resolve(reader.result);
+      reader.onload = () => resolve({archivoBase64: reader.result, filename: input?.files[0]?.name});
       reader.onerror = reject;
     });
   }

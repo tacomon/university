@@ -42,14 +42,24 @@
         </div>
       </div>
       <hr>
-        <div class="container">
-          <button class="btn btn-success float-right" (click)="openModalAgregar()">Agregar</button>
-        </div>
-        <hr>
+      <div class="container">
+        <button class="btn btn-success float-right" (click)="openModalAgregar()">Agregar</button>
+      </div>
+      <hr>
       <div class="container row">
         <div class="table table-responsive align-center">
           <table mat-table [dataSource]="dataActividades">
             <caption>Actividades</caption>
+            <ng-container matColumnDef="select" stickyEnd>
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element" class="align-middle">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(element) : null"
+                    [checked]="selection.isSelected(element)"
+                    [aria-label]="checkboxLabel(element)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
             <ng-container matColumnDef="idActividad" hidden>
               <th mat-header-cell *matHeaderCellDef class="m-3 p-3"> # </th>
               <td mat-cell *matCellDef="let element" class="m-3 p-3"> {{element.idActividad}} </td>
@@ -75,6 +85,39 @@
               <td mat-cell *matCellDef="let element" class="m-3 p-3"> {{element.fechaEntrega}} </td>
             </ng-container>
 
+            <!-- <ng-container matColumnDef="options" stickyEnd>
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element">
+                <button class="btn btn-success m-2 btn-sm" (click)="openModalModificacion(element)">Calificar</button>
+              </td>
+            </ng-container> -->
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="m-2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="m-2"></tr>
+          </table>
+        </div>
+      </div>
+      <hr>
+      <div class="container">
+        <div class="table table-responsive align-center">
+          <table mat-table [dataSource]="dataAlumnos" [hidden]="!actividadSelected">
+            <caption>Alumnos</caption>
+            <ng-container matColumnDef="alumno" hidden>
+              <th mat-header-cell *matHeaderCellDef class="m-3 p-3"> Alumno </th>
+              <td mat-cell *matCellDef="let element" class="m-3 p-3"> {{element.alumno}} </td>
+            </ng-container>
+            <ng-container matColumnDef="fechaEntrega" hidden>
+              <th mat-header-cell *matHeaderCellDef class="m-3 p-3"> Fecha de Entrega </th>
+              <td mat-cell *matCellDef="let element" class="m-3 p-3"> {{element.fechaEntrega}} </td>
+            </ng-container>
+            <ng-container matColumnDef="entregable" hidden>
+              <th mat-header-cell *matHeaderCellDef class="m-3 p-3"> Entregable </th>
+              <td mat-cell *matCellDef="let element" class="m-3 p-3">
+                <!-- <a [href]="createLink(element.entregable, element.nombreEntregable)" target="_blank">{{element.nombreEntregable}}</a>  -->
+                <button class="btn btn-link" (click)="createLink(element.entregable, element.nombreEntregable)">{{element.nombreEntregable}}</button>
+              </td>
+            </ng-container>
+
             <ng-container matColumnDef="options" stickyEnd>
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let element">
@@ -82,8 +125,8 @@
               </td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="m-2"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="m-2"></tr>
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsAlumno" class="m-2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsAlumno;" class="m-2"></tr>
           </table>
         </div>
       </div>
