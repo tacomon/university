@@ -56,7 +56,7 @@
       <div class="app-form-field col-md-4 col-xl-4 col-lg-4 mb-1">
         <mat-form-field appearance="outline">
           <mat-label for="frmCtrlperiod">Retroalimentación</mat-label>
-          <textarea matInput type="text" formControlName="retroAlimentacion" placeholder="Retroalimentación">
+          <textarea matInput type="text" formControlName="retroalimentacion" placeholder="Retroalimentación">
             </textarea>
         </mat-form-field>
       </div>
@@ -65,5 +65,5 @@
 </div>
 <div mat-dialog-actions class="float-right">
   <button mat-button mat-dialog-close class="btn btn-danger mr-2">Cancelar</button>
-  <button mat-button mat-dialog-close cdkFocusInitial class="btn btn-success" (click)="calificar()">Guardar</button>
+  <button mat-button cdkFocusInitial class="btn btn-success" (click)="calificar()">Guardar</button>
 </div>

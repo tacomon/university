@@ -9,16 +9,17 @@ export class ConexionService {
   private baseUrl;
 
   constructor() {
-    this.baseUrl = 'http://localhost:9081/api';
+    this.baseUrl = 'http://localhost:5000';
   }
 
   consumeAPI<T>(parametersFetch: IParametersFetchModel<any>): Promise<T> {
+    const body = JSON.stringify(parametersFetch.body);
     return fetch(`${this.baseUrl}${parametersFetch.url}`, {
       method: parametersFetch.httpMethod,
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(parametersFetch.body),
+      body: body == 'null' ? null : body,
     })
     .then((res: Response) => {
       if(res.ok) {

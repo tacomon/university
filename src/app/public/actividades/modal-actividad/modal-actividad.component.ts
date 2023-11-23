@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActividadesService } from '../actividades.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
@@ -21,7 +21,8 @@ export class ModalActividadComponent implements OnInit {
   constructor(
     fb: FormBuilder,
     private service: ActividadesService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public dialogRef: MatDialogRef<ModalActividadComponent>
   ) {
     this.formActividad = fb.group({
       idAsignatura: [null, [Number]],
@@ -30,7 +31,7 @@ export class ModalActividadComponent implements OnInit {
       titulo: [null, [Number]],
       fechaInicio: [null, [Number]],
       fechaEntrega: [null, [Number]],
-      anexos: [[], []]
+      anexos: [[], []],
     });
     this.formActividad.get('idAsignatura')?.valueChanges.subscribe({
       next: (id) => {
@@ -46,7 +47,7 @@ export class ModalActividadComponent implements OnInit {
     });
     this.ctrlArchivo.valueChanges.subscribe({
       next: (value) => {
-        if(value) {
+        if (value) {
           console.info(value);
           this.agregarAnexo(value);
         }
@@ -55,10 +56,23 @@ export class ModalActividadComponent implements OnInit {
   }
 
   async agregarAnexo(file: any) {
-    const {archivoBase64, filename} = await this.toBase64(file);
-    console.info(archivoBase64);
-    this.formActividad.get('anexos')?.value.push({nombre: filename, file: archivoBase64});
+    const { archivoBase64, filename } = await this.toBase64(file);
 
+    this.formActividad
+      .get('anexos')
+      ?.value.push({ nombre: filename, file: (archivoBase64.split(',')[1]) });
+  }
+
+  toFile(archivoBase64: any, filename: string) {
+    const nombre = filename.split('.');
+    const bstr = atob(archivoBase64?.split(',')[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], nombre[0], { type: nombre[1] });
   }
 
   toBase64(file: any): Promise<any> {
@@ -66,7 +80,11 @@ export class ModalActividadComponent implements OnInit {
       const reader = new FileReader();
       const input: any = document.querySelector('#inputFileAnexo');
       reader.readAsDataURL(input.files[0]);
-      reader.onload = () => resolve({archivoBase64: reader.result, filename: input?.files[0]?.name});
+      reader.onload = () =>
+        resolve({
+          archivoBase64: reader.result,
+          filename: input?.files[0]?.name,
+        });
       reader.onerror = reject;
     });
   }
@@ -98,13 +116,21 @@ export class ModalActividadComponent implements OnInit {
   formValue() {
     // alta de actividad
     const value = this.formActividad.value;
-    return {
-      idAsignatura: value.idAsignatura,
-      idUnidad: value.idUnidad,
+    const parametros = {
       idTema: value.idTema,
       titulo: value.titulo,
       fechaInicio: value.fechaInicio,
       fechaEntrega: value.fechaEntrega,
+      anexos: value.anexos,
     };
+    this.service.insertActividad(parametros).then(
+      (success) => {
+        console.info(success);
+        this.dialogRef.close(true);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 }

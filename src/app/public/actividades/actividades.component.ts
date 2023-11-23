@@ -67,9 +67,9 @@ export class ActividadesComponent implements OnInit {
       next: (id) => {
         if (id) {
           this.getActividades({
-            idAsignatura:
-              this.formFiltrosAvtividades.get('idAsignatura')?.value,
-            idUnidad: this.formFiltrosAvtividades.get('idUnidad')?.value,
+            // idAsignatura:
+            //   this.formFiltrosAvtividades.get('idAsignatura')?.value,
+            // idUnidad: this.formFiltrosAvtividades.get('idUnidad')?.value,
             idTema: id,
           });
         }

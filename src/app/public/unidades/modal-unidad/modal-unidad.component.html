@@ -42,5 +42,5 @@
 </div>
 <div mat-dialog-actions class="float-right">
   <button mat-button mat-dialog-close class="btn btn-danger mr-2">Cancelar</button>
-  <button mat-button mat-dialog-close cdkFocusInitial class="btn btn-success" [mat-dialog-close]="formValue()">Guardar</button>
+  <button mat-button cdkFocusInitial class="btn btn-success" (click)="formValue()">Guardar</button>
 </div>

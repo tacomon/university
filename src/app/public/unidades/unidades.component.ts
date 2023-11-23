@@ -42,7 +42,16 @@ export class UnidadesComponent implements OnInit {
     if(idAsignatura) {
       this.service.getListUnidades(idAsignatura).then(
         (success) => {
-          this.dataUnidades = success;
+          this.dataUnidades = success
+          // .map(unidad => {
+          //   return {
+          //     descripcion: unidad.descripcion,
+          //     asignatura: unidad.asignatura,
+          //     fechaInicio: unidad.fechaInicio,
+          //     fechaFin: unidad.fechaFin,
+          //     idUnidad: unidad.orden
+          //   }
+          // });
         }
       )
     }
@@ -56,6 +65,7 @@ export class UnidadesComponent implements OnInit {
       next: (data) => {
         if(data) {
           console.info(data)
+          this.ngOnInit();
         }
       }
     })

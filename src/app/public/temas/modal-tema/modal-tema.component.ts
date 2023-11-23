@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActividadesService } from '../../actividades/actividades.service';
 import { DatePipe } from '@angular/common';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-modal-tema',
@@ -21,7 +22,8 @@ export class ModalTemaComponent implements OnInit {
   constructor(
     fb: FormBuilder,
     private service: ActividadesService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    public dialogRef: MatDialogRef<ModalTemaComponent>
   ) {
     this.formTema = fb.group({
       idAsignatura: [],
@@ -56,13 +58,21 @@ export class ModalTemaComponent implements OnInit {
 
   formValue(): any {
     const values = this.formTema.value;
-    return {
-      idAsignatura: values.idAsignatura,
+    const parametros = {
       idUnidad: values.idUnidad,
       descripcion: values.descripcion,
       objetivo: values.objetivo,
-      fechaInicio: this.datePipe.transform(values.fechaInicio, 'dd/MM/yyyy'),
-      fechaTermino: this.datePipe.transform(values.fechaTermino, 'dd/MM/yyyy'),
+      fechaInicio: this.datePipe.transform(values.fechaInicio, 'yyyy-MM-dd'),
+      fechaTermino: this.datePipe.transform(values.fechaTermino, 'yyyy-MM-dd'),
     };
+    this.service.insertTema(parametros).then(
+      (success) => {
+        console.info(success);
+        this.dialogRef.close(true);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 }

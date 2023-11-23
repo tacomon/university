@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActividadesService } from '../actividades.service';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-calificar',
@@ -18,7 +18,8 @@ export class CalificarComponent implements OnInit {
   listTema: any[] = [];
 
   constructor(fb: FormBuilder, private service: ActividadesService,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<CalificarComponent>) {
     this.formCalificar = fb.group({
       idAsignatura: [null, [Number]],
       idUnidad: [null, [Number]],
@@ -27,7 +28,7 @@ export class CalificarComponent implements OnInit {
       entregable: [null, [Number]],
       alumno: [null, [Number]],
       calificacion: [null, [Number]],
-      retroAlimentacion: [null, [Number]],
+      retroalimentacion: [null, [Number]],
     });
   }
 
@@ -64,6 +65,18 @@ export class CalificarComponent implements OnInit {
   calificar(): void {
     console.info('calificar')
     console.info(this.formCalificar.value)
+    const parametros = {
+      calificacion: this.formCalificar.value.calificacion,
+      retroalimentacion: this.formCalificar.value.retroalimentacion,
+      correo: this.data.formCalificar.correo,
+      id: this.data.formCalificar.id,
+    };
+    this.service.calificar(parametros).then(
+      (success) => {
+        this.dialogRef.close(true)
+      }
+    )
+
   }
 
 }
